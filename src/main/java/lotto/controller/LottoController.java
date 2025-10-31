@@ -23,5 +23,6 @@ public class LottoController {
         int count = lottoService.calculateLottoCount(inputView.CalculateLottoCount());
         outputView.lottoCount(count);
         for (int i = 0; i < count; i++) lottos.addLotto(lottoService.createLotto());
+
     }
 }
