@@ -16,4 +16,36 @@ public class LottoService {
         System.out.println(lotto);
         return lotto;
     }
+
+    public void compare(List<List<Integer>> lottos, List<Integer> WinningNumber, Integer bonusNumber){
+        for(List<Integer> lotto : lottos){
+            compareNumber(lotto,WinningNumber,bonusNumber);
+        }
+    }
+
+    public void compareNumber(List<Integer> lotto, List<Integer> WinningNumber, Integer bounusNumber){
+        int matchCount = 0;
+        boolean bonus = false;
+        for (Integer lottoNumber : lotto) {
+            if (eachCompareNumber(lottoNumber, WinningNumber)) matchCount++;
+        }
+        if(matchCount == 5) {
+            if(compareBonusNumber(lotto,bounusNumber)) bonus = true;
+        }
+    }
+
+    public boolean eachCompareNumber(Integer number, List<Integer> WinningNumber){
+        for (Integer winningNumber : WinningNumber) {
+            if (number.equals(winningNumber)) return true;
+        }
+        return false;
+    }
+
+    public boolean compareBonusNumber(List<Integer> lotto, Integer bonusNumber){
+        for (Integer lottoNumber : lotto) {
+            if (lottoNumber.equals(bonusNumber)) return true;
+        }
+        return false;
+    }
+
 }

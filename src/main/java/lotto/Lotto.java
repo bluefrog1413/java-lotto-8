@@ -18,5 +18,13 @@ public class Lotto {
         }
     }
 
+    public List<Integer> getNumber(){
+        return numbers;
+    }
+
+    public int getBonusNumber(){
+        return bonusNumber;
+    }
+
     // TODO: 추가 기능 구현
 }
