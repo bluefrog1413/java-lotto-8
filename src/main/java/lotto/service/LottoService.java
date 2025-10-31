@@ -16,5 +16,4 @@ public class LottoService {
         System.out.println(lotto);
         return lotto;
     }
-
 }
