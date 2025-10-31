@@ -12,6 +12,7 @@ public class Application {
         OutputView outputView = new OutputView();
 
         LottoController lottoController = new LottoController(lottoService, inputView, outputView);
+
         lottoController.run();
     }
 }

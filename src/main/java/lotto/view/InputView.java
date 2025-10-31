@@ -2,6 +2,9 @@ package lotto.view;
 
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class InputView {
     public int CalculateLottoCount(){
         System.out.println("구입금액을 입력해 주세요.");
