@@ -11,6 +11,7 @@ public class LottoController {
     private final InputView inputView;
     private final OutputView outputView;
     private final Lottos lottos;
+    private Lotto lotto;
 
     public LottoController(LottoService lottoService, InputView inputView, OutputView outputView, Lottos lottos){
         this.lottoService = lottoService;
@@ -23,6 +24,6 @@ public class LottoController {
         int count = lottoService.calculateLottoCount(inputView.CalculateLottoCount());
         outputView.lottoCount(count);
         for (int i = 0; i < count; i++) lottos.addLotto(lottoService.createLotto());
-
+        Lotto lotto = new Lotto(inputView.WinningNumber(), inputView.inputBonusNumber());
     }
 }
