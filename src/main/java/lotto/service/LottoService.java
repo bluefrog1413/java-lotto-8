@@ -1,5 +1,6 @@
 package lotto.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import camp.nextstep.edu.missionutils.Randoms;
@@ -16,8 +17,8 @@ public class LottoService {
         return amount / 1000;
     }
 
-    public List<Integer> createLotto(){
-        List<Integer> lotto = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+    public List<Integer> createLotto() {
+        List<Integer> lotto = new ArrayList<>(Randoms.pickUniqueNumbersInRange(1, 45, 6));
         Collections.sort(lotto);
         System.out.println(lotto);
         return lotto;
