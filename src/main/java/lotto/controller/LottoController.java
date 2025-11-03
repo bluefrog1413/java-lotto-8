@@ -24,14 +24,37 @@ public class LottoController {
     }
 
     public void run(){
-        int price = inputView.purchaseAmount();
+        int price = inputPurchaseAmount();
         lottos.addPrice(price);
         int count = lottoService.calculateLottoCount(price);
         outputView.lottoCount(count);
         for (int i = 0; i < count; i++) lottos.addLotto(lottoService.createLotto());
-        Lotto lotto = new Lotto(inputView.WinningNumber(), inputView.inputBonusNumber());
+        Lotto lotto = inputWinningLotto();
+        lotto.addBonusNumber(inputView.inputBonusNumber());
         lottoService.compare(lottos.getLottos(), lotto.getNumber(), lotto.getBonusNumber());
         outputView.showResult(lottoService.getResultStatistics());
         outputView.showProfitRate(lottoService.calculateProfitRate(lottos));
+    }
+
+    private int inputPurchaseAmount() {
+        while (true) {
+            try {
+                int price = inputView.purchaseAmount();
+                lottoService.calculateLottoCount(price);
+                return price;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    private Lotto inputWinningLotto() {
+        while (true) {
+            try {
+                return new Lotto(inputView.WinningNumber());
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }

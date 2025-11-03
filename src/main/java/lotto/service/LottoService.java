@@ -12,6 +12,7 @@ public class LottoService {
 
     public int calculateLottoCount(int amount){
         if(amount % 1000 != 0) throw new IllegalArgumentException("[ERROR] 구매 금액은 1000원 단위만 가능합니다.");
+
         return amount / 1000;
     }
 
