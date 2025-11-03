@@ -16,12 +16,10 @@ public class Lotto {
         if (numbers.size() != 6) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 정확히 6개여야 합니다.");
         }
-
         Set<Integer> unique = new HashSet<>(numbers);
         if (unique.size() != 6) {
             throw new IllegalArgumentException("[ERROR] 로또 번호에 중복된 숫자가 존재합니다.");
         }
-
         for (int number : numbers) {
             if (number < 1 || number > 45) {
                 throw new IllegalArgumentException("[ERROR] 로또 번호는 1부터 45 사이여야 합니다.");

@@ -28,28 +28,23 @@ public class LottoService {
         return lotto;
     }
 
-    // ✅ WinningLotto를 직접 받아서 비교하도록 변경
     public void compare(List<List<Integer>> purchasedLottos, WinningLotto winningLotto) {
         for (List<Integer> lotto : purchasedLottos) {
             compareNumber(lotto, winningLotto);
         }
     }
 
-    // ✅ 개별 로또를 당첨 객체와 비교
     private void compareNumber(List<Integer> lotto, WinningLotto winningLotto) {
         Lotto winning = winningLotto.getLotto();
         List<Integer> winningNumbers = winning.getNumber();
         int bonusNumber = winningLotto.getBonusNumber();
-
         int matchCount = 0;
         for (Integer num : lotto) {
             if (winningNumbers.contains(num)) {
                 matchCount++;
             }
         }
-
         boolean bonus = (matchCount == 5) && lotto.contains(bonusNumber);
-
         Result result = Result.of(matchCount, bonus);
         resultStatistics.add(result);
     }
