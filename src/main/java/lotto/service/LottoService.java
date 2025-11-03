@@ -3,6 +3,7 @@ package lotto.service;
 import java.util.Collections;
 import java.util.List;
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.model.Lottos;
 import lotto.model.Result;
 import lotto.model.ResultStatistics;
 
@@ -59,4 +60,11 @@ public class LottoService {
         return resultStatistics;
     }
 
+    public double calculateProfitRate(Lottos lottos){
+        int purchaseAmount = lottos.getPrice();
+        int totalPrice = resultStatistics.getTotalPrice();
+
+        if(totalPrice == 0) return 0;
+        return (double) totalPrice / purchaseAmount * 100;
+    }
 }

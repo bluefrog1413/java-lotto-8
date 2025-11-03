@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class ResultStatistics {
     private final Map<Result, Integer> results = new EnumMap<>(Result.class);
+    private int totalPrice = 0;
 
     public ResultStatistics() {
         for (Result result : Result.values()) {
@@ -12,8 +13,10 @@ public class ResultStatistics {
         }
     }
 
+
     public void add(Result result) {
         results.put(result, results.get(result) + 1);
+        totalPrice += result.getReward();
     }
 
     public int getCount(Result result) {
@@ -28,5 +31,9 @@ public class ResultStatistics {
         System.out.printf("5개 일치 (1,500,000원) - %d개%n", results.get(Result.FIVE));
         System.out.printf("5개 일치, 보너스 볼 일치 (30,000,000원) - %d개%n", results.get(Result.FIVE_BONUS));
         System.out.printf("6개 일치 (2,000,000,000원) - %d개%n", results.get(Result.SIX));
+    }
+
+    public int getTotalPrice(){
+        return totalPrice;
     }
 }

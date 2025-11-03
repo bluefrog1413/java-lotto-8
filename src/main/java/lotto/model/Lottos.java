@@ -18,4 +18,8 @@ public class Lottos {
     public List<List<Integer>> getLottos(){
         return lottos;
     }
+
+    public int getPrice(){
+        return price;
+    }
 }

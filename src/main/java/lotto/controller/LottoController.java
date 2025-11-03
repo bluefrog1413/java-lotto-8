@@ -24,12 +24,14 @@ public class LottoController {
     }
 
     public void run(){
-        int count = lottoService.calculateLottoCount(inputView.CalculateLottoCount());
-        lottos.addPrice(count);
+        int price = inputView.purchaseAmount();
+        lottos.addPrice(price);
+        int count = lottoService.calculateLottoCount(price);
         outputView.lottoCount(count);
         for (int i = 0; i < count; i++) lottos.addLotto(lottoService.createLotto());
         Lotto lotto = new Lotto(inputView.WinningNumber(), inputView.inputBonusNumber());
         lottoService.compare(lottos.getLottos(), lotto.getNumber(), lotto.getBonusNumber());
         outputView.showResult(lottoService.getResultStatistics());
+        outputView.showProfitRate(lottoService.calculateProfitRate(lottos));
     }
 }
