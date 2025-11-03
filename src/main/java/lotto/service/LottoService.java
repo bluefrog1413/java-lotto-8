@@ -3,8 +3,12 @@ package lotto.service;
 import java.util.Collections;
 import java.util.List;
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.model.Result;
+import lotto.model.ResultStatistics;
 
 public class LottoService {
+    private final ResultStatistics resultStatistics = new ResultStatistics();
+
     public int calculateLottoCount(int amount){
         if(amount % 1000 != 0) throw new IllegalArgumentException("[ERROR] 구매 금액은 1000원 단위만 가능합니다.");
         return amount / 1000;
@@ -32,6 +36,9 @@ public class LottoService {
         if(matchCount == 5) {
             if(compareBonusNumber(lotto,bounusNumber)) bonus = true;
         }
+
+        Result result = Result.of(matchCount, bonus);
+        resultStatistics.add(result);
     }
 
     public boolean eachCompareNumber(Integer number, List<Integer> WinningNumber){
@@ -46,6 +53,10 @@ public class LottoService {
             if (lottoNumber.equals(bonusNumber)) return true;
         }
         return false;
+    }
+
+    public ResultStatistics getResultStatistics() {
+        return resultStatistics;
     }
 
 }
