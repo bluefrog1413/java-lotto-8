@@ -26,23 +26,13 @@ public class LottoController {
     }
 
     public void run() {
-        // 1. 구매 금액 입력 및 로또 생성
         int price = inputPurchaseAmount();
         lottos.addPrice(price);
         int count = lottoService.calculateLottoCount(price);
         outputView.lottoCount(count);
-
-        for (int i = 0; i < count; i++) {
-            lottos.addLotto(lottoService.createLotto());
-        }
-
-        // 2. 당첨 번호 & 보너스 번호 입력
+        for (int i = 0; i < count; i++) lottos.addLotto(lottoService.createLotto());
         WinningLotto winningLotto = inputWinningLotto();
-
-        // 3. 비교 로직 수행
         lottoService.compare(lottos.getLottos(), winningLotto);
-
-        // 4. 결과 출력
         outputView.showResult(lottoService.getResultStatistics());
         outputView.showProfitRate(lottoService.calculateProfitRate(lottos));
     }
@@ -51,7 +41,7 @@ public class LottoController {
         while (true) {
             try {
                 int price = inputView.purchaseAmount();
-                lottoService.calculateLottoCount(price); // 유효한 금액인지 검증
+                lottoService.calculateLottoCount(price);
                 return price;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
