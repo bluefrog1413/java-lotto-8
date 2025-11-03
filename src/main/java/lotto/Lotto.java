@@ -13,7 +13,8 @@ public class Lotto {
         this.numbers = numbers;
     }
 
-    public void addBonusNumber(int bonusNumber){
+    public void setBonusNumber(int bonusNumber) {
+        validateBonusNumber(numbers, bonusNumber);
         this.bonusNumber = bonusNumber;
     }
 
@@ -33,6 +34,15 @@ public class Lotto {
             if (number < 1 || number > 45) {
                 throw new IllegalArgumentException("[ERROR] 로또 번호는 1부터 45 사이여야 합니다.");
             }
+        }
+    }
+
+    private void validateBonusNumber(List<Integer> numbers, int bonusNumber) {
+        if (numbers.contains(bonusNumber)) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
+        }
+        if (bonusNumber < 1 || bonusNumber > 45) {
+            throw new IllegalArgumentException("[ERROR] 보너스 번호는 1~45 사이여야 합니다.");
         }
     }
 
