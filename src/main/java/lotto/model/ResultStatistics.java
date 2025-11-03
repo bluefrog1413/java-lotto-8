@@ -13,7 +13,6 @@ public class ResultStatistics {
         }
     }
 
-
     public void add(Result result) {
         results.put(result, results.get(result) + 1);
         totalPrice += result.getReward();

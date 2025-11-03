@@ -1,19 +1,23 @@
 package lotto.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import camp.nextstep.edu.missionutils.Randoms;
+import lotto.model.Lotto;
 import lotto.model.Lottos;
 import lotto.model.Result;
 import lotto.model.ResultStatistics;
+import lotto.model.WinningLotto;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class LottoService {
     private final ResultStatistics resultStatistics = new ResultStatistics();
 
-    public int calculateLottoCount(int amount){
-        if(amount % 1000 != 0) throw new IllegalArgumentException("[ERROR] 구매 금액은 1000원 단위만 가능합니다.");
-
+    public int calculateLottoCount(int amount) {
+        if (amount % 1000 != 0) {
+            throw new IllegalArgumentException("[ERROR] 구매 금액은 1000원 단위만 가능합니다.");
+        }
         return amount / 1000;
     }
 
@@ -24,49 +28,43 @@ public class LottoService {
         return lotto;
     }
 
-    public void compare(List<List<Integer>> lottos, List<Integer> WinningNumber, Integer bonusNumber){
-        for(List<Integer> lotto : lottos){
-            compareNumber(lotto,WinningNumber,bonusNumber);
+    // ✅ WinningLotto를 직접 받아서 비교하도록 변경
+    public void compare(List<List<Integer>> purchasedLottos, WinningLotto winningLotto) {
+        for (List<Integer> lotto : purchasedLottos) {
+            compareNumber(lotto, winningLotto);
         }
     }
 
-    public void compareNumber(List<Integer> lotto, List<Integer> WinningNumber, Integer bounusNumber){
+    // ✅ 개별 로또를 당첨 객체와 비교
+    private void compareNumber(List<Integer> lotto, WinningLotto winningLotto) {
+        Lotto winning = winningLotto.getLotto();
+        List<Integer> winningNumbers = winning.getNumber();
+        int bonusNumber = winningLotto.getBonusNumber();
+
         int matchCount = 0;
-        boolean bonus = false;
-        for (Integer lottoNumber : lotto) {
-            if (eachCompareNumber(lottoNumber, WinningNumber)) matchCount++;
+        for (Integer num : lotto) {
+            if (winningNumbers.contains(num)) {
+                matchCount++;
+            }
         }
-        if(matchCount == 5) {
-            if(compareBonusNumber(lotto,bounusNumber)) bonus = true;
-        }
+
+        boolean bonus = (matchCount == 5) && lotto.contains(bonusNumber);
 
         Result result = Result.of(matchCount, bonus);
         resultStatistics.add(result);
-    }
-
-    public boolean eachCompareNumber(Integer number, List<Integer> WinningNumber){
-        for (Integer winningNumber : WinningNumber) {
-            if (number.equals(winningNumber)) return true;
-        }
-        return false;
-    }
-
-    public boolean compareBonusNumber(List<Integer> lotto, Integer bonusNumber){
-        for (Integer lottoNumber : lotto) {
-            if (lottoNumber.equals(bonusNumber)) return true;
-        }
-        return false;
     }
 
     public ResultStatistics getResultStatistics() {
         return resultStatistics;
     }
 
-    public double calculateProfitRate(Lottos lottos){
+    public double calculateProfitRate(Lottos lottos) {
         int purchaseAmount = lottos.getPrice();
-        int totalPrice = resultStatistics.getTotalPrice();
+        int totalWinning = resultStatistics.getTotalPrice();
 
-        if(totalPrice == 0) return 0;
-        return (double) totalPrice / purchaseAmount * 100;
+        if (totalWinning == 0) {
+            return 0;
+        }
+        return (double) totalWinning / purchaseAmount * 100;
     }
 }

@@ -1,4 +1,4 @@
-package lotto;
+package lotto.model;
 
 import java.util.HashSet;
 import java.util.List;
@@ -6,16 +6,10 @@ import java.util.Set;
 
 public class Lotto {
     private final List<Integer> numbers;
-    private int bonusNumber;
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
         this.numbers = numbers;
-    }
-
-    public void setBonusNumber(int bonusNumber) {
-        validateBonusNumber(numbers, bonusNumber);
-        this.bonusNumber = bonusNumber;
     }
 
     private void validate(List<Integer> numbers) {
@@ -37,20 +31,7 @@ public class Lotto {
         }
     }
 
-    private void validateBonusNumber(List<Integer> numbers, int bonusNumber) {
-        if (numbers.contains(bonusNumber)) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 당첨 번호와 중복될 수 없습니다.");
-        }
-        if (bonusNumber < 1 || bonusNumber > 45) {
-            throw new IllegalArgumentException("[ERROR] 보너스 번호는 1~45 사이여야 합니다.");
-        }
-    }
-
     public List<Integer> getNumber(){
         return numbers;
-    }
-
-    public int getBonusNumber(){
-        return bonusNumber;
     }
 }
